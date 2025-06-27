@@ -26,12 +26,6 @@ BASE_DIR   = os.path.dirname(__file__)
 USERS_FILE = os.path.join(BASE_DIR, 'users_file.json')
 _lock      = threading.Lock()
 
-# def load_users():
-#     try:
-#         with open(USERS_FILE, encoding='utf-8') as f:
-#             return json.load(f)
-#     except (FileNotFoundError, ValueError):
-#         return {}
 def load_users():
     try:
         with open(USERS_FILE, encoding='utf-8') as f:
@@ -44,11 +38,6 @@ def save_users(data):
     serialisable = {str(k): v for k, v in data.items()} 
     with _lock, open(USERS_FILE, 'w', encoding='utf-8') as f:
         json.dump(serialisable, f, indent=2)
-
-
-# def save_users(data):
-#     with _lock, open(USERS_FILE, 'w', encoding='utf-8') as f:
-#         json.dump(data, f, indent=2)
 
 # --- Routes --------------------------------------------------------------
 @app.route('/')
@@ -149,21 +138,6 @@ def update_user(user_id):
     users[user_id].update({k: v for k, v in data.items() if k in ('name', 'email')})
     save_users(users)
     return jsonify({user_id: users[user_id]}), 200
-# @app.route('/users/<int:user_id>', methods=['PUT'])
-# def update_user(user_id):
-#     users = load_users()
-#     key = str(user_id)                     
-
-#     if key not in users:
-#         return jsonify({'error': 'User not found'}), 404
-
-#     data = request.get_json(silent=True) or {}
-#     users[key].update({k: v for k, v in data.items() if k in ('name', 'email')})
-#     save_users(users)
-#     return jsonify({user_id: users[key]}), 200
-
-
-
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
