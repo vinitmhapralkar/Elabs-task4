@@ -16,6 +16,10 @@ A simple REST API using Flask to manage user data in-memory. Built for a Python 
 
 ## 🛠 Installation
 
+## Api Docs -
+
+http://localhost:5000/apidocs
+
 ```bash
 git clone https://github.com/vinitmhapralkar/flask-user-api.git
 pip install -r requirements.txt
